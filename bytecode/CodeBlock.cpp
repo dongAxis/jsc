@@ -3325,13 +3325,13 @@ CodeBlock* CodeBlock::replacement()
     RELEASE_ASSERT_NOT_REACHED();
     return nullptr;
 }
-
+//不同类型的代码， 有不同的计算方式
 DFG::CapabilityLevel CodeBlock::computeCapabilityLevel()
 {
     const ClassInfo* classInfo = this->classInfo();
 
-    if (classInfo == FunctionCodeBlock::info()) {
-        if (m_isConstructor)
+    if (classInfo == FunctionCodeBlock::info()) {           //function....
+        if (m_isConstructor)      //是否是其实函数？
             return DFG::functionForConstructCapabilityLevel(this);
         return DFG::functionForCallCapabilityLevel(this);
     }

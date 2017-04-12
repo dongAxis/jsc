@@ -319,7 +319,7 @@ JITWorklist* JITWorklist::instance()
     std::call_once(
         once,
         [] {
-            worklist = new JITWorklist();
+            worklist = new JITWorklist();     //启动JIT？
         });
     return worklist;
 }

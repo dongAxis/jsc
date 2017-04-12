@@ -572,7 +572,8 @@ void JIT::compileWithoutLinking(JITCompilationEffort effort)
         m_instructions = m_codeBlock->instructions().clone();
     }
 
-    DFG::CapabilityLevel level = m_codeBlock->capabilityLevel();
+    //收集当前code block的属性
+    DFG::CapabilityLevel level = m_codeBlock->capabilityLevel();      //获得当前code block的属性： 是否可以compile? 是否可以inline?
     switch (level) {
     case DFG::CannotCompile:
         m_canBeOptimized = false;
@@ -589,12 +590,13 @@ void JIT::compileWithoutLinking(JITCompilationEffort effort)
         RELEASE_ASSERT_NOT_REACHED();
         break;
     }
-    
+  
+    //根据当前的code block来决定一些属性
     switch (m_codeBlock->codeType()) {
     case GlobalCode:
     case ModuleCode:
     case EvalCode:
-        m_codeBlock->m_shouldAlwaysBeInlined = false;
+        m_codeBlock->m_shouldAlwaysBeInlined = false;     //如果是global code， Module code， eval那么， 不允许inline
         break;
     case FunctionCode:
         // We could have already set it to false because we detected an uninlineable call.

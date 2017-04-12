@@ -237,14 +237,16 @@ void Plan::compileInThread(LongLivedState& longLivedState, ThreadData* threadDat
 
 Plan::CompilationPath Plan::compileInThreadImpl(LongLivedState& longLivedState)
 {
-    cleanMustHandleValuesIfNecessary();
+    cleanMustHandleValuesIfNecessary();     //不知道这个是干什么的。。。。
     
     if (verboseCompilationEnabled(mode) && osrEntryBytecodeIndex != UINT_MAX) {
         dataLog("\n");
         dataLog("Compiler must handle OSR entry from bc#", osrEntryBytecodeIndex, " with values: ", mustHandleValues, "\n");
         dataLog("\n");
     }
-    
+  
+    // 代码访问的问题， 可以被抽象成图问题。
+    // 每个basic block是一个图节点。
     Graph dfg(*vm, *this, longLivedState);
     
     if (!parse(dfg)) {

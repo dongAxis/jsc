@@ -97,7 +97,7 @@ inline CapabilityLevel functionForCallCapabilityLevel(CodeBlock* codeBlock)
     return functionCapabilityLevel(
         mightCompileFunctionForCall(codeBlock),
         mightInlineFunctionForCall(codeBlock),
-        capabilityLevel(codeBlock));
+        capabilityLevel(codeBlock));                  //判断当前的code block是否可以compile?  是否可以inline?
 }
 
 inline CapabilityLevel functionForConstructCapabilityLevel(CodeBlock* codeBlock)

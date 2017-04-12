@@ -345,7 +345,7 @@ inline bool jitCompileAndSetHeuristics(CodeBlock* codeBlock, ExecState* exec, un
         return true;
     }
     case JITCode::InterpreterThunk: {     //如果当前还是处于lline的状态， 那么证明当前code block还没有编译完成
-        JITWorklist::instance()->compileLater(codeBlock, loopOSREntryBytecodeOffset);   //loopOSREntryBytecodeOffset是当前Basicblock的偏移
+        JITWorklist::instance()->compileLater(codeBlock, loopOSREntryBytecodeOffset);   //loopOSREntryBytecodeOffset是当前需要优化的代码在Basicblock的偏移
         return codeBlock->jitType() == JITCode::BaselineJIT;
     }
     default:

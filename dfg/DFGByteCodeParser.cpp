@@ -1083,7 +1083,7 @@ private:
     HashMap<ConstantBufferKey, unsigned> m_constantBufferCache;
     
     struct InlineStackEntry {
-        ByteCodeParser* m_byteCodeParser;
+        ByteCodeParser* m_byteCodeParser;       //bytecode的解释器
         
         CodeBlock* m_codeBlock;
         CodeBlock* m_profiledBlock;
@@ -1174,7 +1174,7 @@ private:
         }
     };
     
-    InlineStackEntry* m_inlineStackTop;
+    InlineStackEntry* m_inlineStackTop;       //处理inline?  所有的JIT都是inline的？
     
     struct DelayedSetLocal {
         CodeOrigin m_origin;
@@ -5754,7 +5754,7 @@ void ByteCodeParser::parseCodeBlock()
 {
     clearCaches();
     
-    CodeBlock* codeBlock = m_inlineStackTop->m_codeBlock;
+    CodeBlock* codeBlock = m_inlineStackTop->m_codeBlock;   //首先拿到当前inline stack的code block?
     
     if (m_graph.compilation()) {
         m_graph.compilation()->addProfiledBytecodes(

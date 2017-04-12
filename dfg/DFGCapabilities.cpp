@@ -39,12 +39,12 @@ namespace JSC { namespace DFG {
 bool isSupported()
 {
     return Options::useDFGJIT()
-        && MacroAssembler::supportsFloatingPoint();
+        && MacroAssembler::supportsFloatingPoint();     //是否打开了DFG？是否支持浮点优化
 }
 
 bool isSupportedForInlining(CodeBlock* codeBlock)
 {
-    return codeBlock->ownerScriptExecutable()->isInliningCandidate();
+    return codeBlock->ownerScriptExecutable()->isInliningCandidate();   //是否被标记为不可inline？
 }
 
 bool mightCompileEval(CodeBlock* codeBlock)
@@ -61,9 +61,9 @@ bool mightCompileProgram(CodeBlock* codeBlock)
 }
 bool mightCompileFunctionForCall(CodeBlock* codeBlock)
 {
-    return isSupported()
-        && codeBlock->instructionCount() <= Options::maximumOptimizationCandidateInstructionCount()
-        && codeBlock->ownerScriptExecutable()->isOkToOptimize();
+    return isSupported()    //判断是否支持一些特性？
+        && codeBlock->instructionCount() <= Options::maximumOptimizationCandidateInstructionCount()   //判断当前指令是否大于最大指令限制
+        && codeBlock->ownerScriptExecutable()->isOkToOptimize();        //是否被标记为不可优化？
 }
 bool mightCompileFunctionForConstruct(CodeBlock* codeBlock)
 {
@@ -261,9 +261,9 @@ CapabilityLevel capabilityLevel(OpcodeID opcodeID, CodeBlock* codeBlock, Instruc
 
 CapabilityLevel capabilityLevel(CodeBlock* codeBlock)
 {
-    Interpreter* interpreter = codeBlock->vm()->interpreter;
-    Instruction* instructionsBegin = codeBlock->instructions().begin();
-    unsigned instructionCount = codeBlock->instructions().size();
+    Interpreter* interpreter = codeBlock->vm()->interpreter;              //当前vm的llint解释器实例
+    Instruction* instructionsBegin = codeBlock->instructions().begin();   //起始指令
+    unsigned instructionCount = codeBlock->instructions().size();         //指令个数
     CapabilityLevel result = CanCompileAndInline;
     
     for (unsigned bytecodeOffset = 0; bytecodeOffset < instructionCount; ) {

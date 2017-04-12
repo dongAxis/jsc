@@ -105,7 +105,7 @@ protected:
             dataLog(m_worklist, ": Compiling ", m_plan->key(), " asynchronously\n");
         
         // There's no way for the GC to be safepointing since we own rightToRun.
-        if (m_plan->vm->heap.collectorBelievesThatTheWorldIsStopped()) {
+        if (m_plan->vm->heap.collectorBelievesThatTheWorldIsStopped()) {    //暂定GC
             dataLog("Heap is stoped but here we are! (1)\n");
             RELEASE_ASSERT_NOT_REACHED();
         }
